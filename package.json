@@ -1,0 +1,11 @@
+{
+  "name": "Meadowlark",
+  "version": "0.0.1",
+  "description": "Web Development with Node and Express",
+  "main": "meadowlark.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joseph Thomas Babu",
+  "license": "MIT"
+}
