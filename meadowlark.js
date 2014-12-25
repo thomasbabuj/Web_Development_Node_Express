@@ -8,6 +8,12 @@ var express= require('express');
 
 var app = express();
 
+// create a view engine and configures expess to use it by default
+var hanlebars = require('express-hanlebars').create({ defaultLayout : 'main' });
+
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'hanlebars');
+
 app.set('port', process.env.PORT || 3000);
 
 //Adding some routes for the Home and About Page
