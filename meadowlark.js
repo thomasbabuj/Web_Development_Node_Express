@@ -5,14 +5,16 @@
 */
 
 var express= require('express');
+var exphbs = require('express-handlebars');
 
 var app = express();
 
-// create a view engine and configures expess to use it by default
-// defaultLayout property helps to load main.handlbars as a defult template
-var handlebars = require('express-handlebars').create({ defaultLayout : 'main' });
+//Create ExpressHandleBars instance with a default layout.
+var hbs = exphbs.create({
+	defaultLayout : 'main'
+});
 
-app.engine('handlebars', handlebars.engine);
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.set('port', process.env.PORT || 3000);
