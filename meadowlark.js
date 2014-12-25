@@ -28,8 +28,18 @@ app.get('/', function(req, res) {
 	res.render('home');	
 });
 
+//display virtual fortune cookies on the page
+var fortunes = [
+	"Conquer your fears or they will conquer you.",
+	"Rivers need springs.",
+	"Do not fear what you don't know.",
+	"You will have a pleasent surprise.",
+	"Whenever possible, keep it simple."
+];
+
 app.get('/about', function(req, res){
-	res.render('about');	
+	var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+	res.render('about', {fortune : randomFortune });		
 });
 
 //Custom 404 page
