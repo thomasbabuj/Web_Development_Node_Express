@@ -10,36 +10,35 @@ var app = express();
 
 // create a view engine and configures expess to use it by default
 // defaultLayout property helps to load main.handlbars as a defult template
-var hanlebars = require('express-hanlebars').create({ defaultLayout : 'main' });
+var handlebars = require('express-handlebars').create({ defaultLayout : 'main' });
 
 app.engine('handlebars', handlebars.engine);
-app.set('view engine', 'hanlebars');
+app.set('view engine', 'handlebars');
 
 app.set('port', process.env.PORT || 3000);
 
 //Adding some routes for the Home and About Page
 app.get('/', function(req, res) {
-	res.type('text/plain');
-	res.send('Meadowlark Travel');
+	res.render('home');	
 });
 
 app.get('/about', function(req, res){
-	res.type('text/plain');
-	res.send('About Meadowlark Travel');
+	res.render('about');	
 });
 
 //Custom 404 page
-app.use(function(req, res){
-	res.type('text/plain');
+//Catch-all handler (middleware)
+app.use(function(req, res, next){
 	res.status(404);
-	res.send('404 - Not Found');
+	res.render('404');
 });
 
 //Custom 500 page
+// error-handler middleware
 app.use(function(err, req, res, next) {
-	res.type('text/plain');
+	console.error(err.stack);
 	res.status(500);
-	res.send('500 - Server Error');
+	res.render('500');		
 });
 
 app.listen(app.get('port'), function(){
