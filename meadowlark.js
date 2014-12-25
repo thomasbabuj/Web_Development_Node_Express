@@ -2,6 +2,7 @@
 *  Our Project's entry point
 *  app.<http_verb>( get,post... ) provides routes to our app
 *  app.use - is the method by which express adds middleware. ( Catch-all handler for anything that didn't get matched by a route)
+*  middlewares provides modularization, making it easier to hanlde requests.
 */
 
 var express= require('express');
@@ -18,6 +19,9 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.set('port', process.env.PORT || 3000);
+
+//Adding a middleware to load static files and views
+app.use(express.static(__dirname + '/public'));
 
 //Adding some routes for the Home and About Page
 app.get('/', function(req, res) {
