@@ -1,5 +1,7 @@
 /*
 *  Our Project's entry point
+*  app.<http_verb>( get,post... ) provides routes to our app
+*  app.use - is the method by which express adds middleware. ( Catch-all handler for anything that didn't get matched by a route)
 */
 
 var express= require('express');
