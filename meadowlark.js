@@ -7,6 +7,7 @@
 
 var express= require('express');
 var exphbs = require('express-handlebars');
+var fortune = require('./lib/fortune.js');
 
 var app = express();
 
@@ -29,17 +30,8 @@ app.get('/', function(req, res) {
 });
 
 //display virtual fortune cookies on the page
-var fortunes = [
-	"Conquer your fears or they will conquer you.",
-	"Rivers need springs.",
-	"Do not fear what you don't know.",
-	"You will have a pleasent surprise.",
-	"Whenever possible, keep it simple."
-];
-
-app.get('/about', function(req, res){
-	var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-	res.render('about', {fortune : randomFortune });		
+app.get('/about', function(req, res){	
+	res.render('about', { fortune : fortune.getFortune() });		
 });
 
 //Custom 404 page
