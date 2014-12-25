@@ -9,6 +9,7 @@ var express= require('express');
 var app = express();
 
 // create a view engine and configures expess to use it by default
+// defaultLayout property helps to load main.handlbars as a defult template
 var hanlebars = require('express-hanlebars').create({ defaultLayout : 'main' });
 
 app.engine('handlebars', handlebars.engine);
