@@ -43,6 +43,15 @@ app.get('/about', function(req, res){
 	});		
 });
 
+//Adding routes for two new pages(hood-river and request-group-rate)
+app.get('tours/hood-river', function(req, res){
+	res.render('tours/hood-river');
+});
+
+app.get('tours/request-group-rate', function(req, res){
+	res.render('tours/request-group-rate');
+});
+
 //Custom 404 page
 //Catch-all handler (middleware)
 app.use(function(req, res, next){
