@@ -37,7 +37,10 @@ app.get('/', function(req, res) {
 
 //display virtual fortune cookies on the page
 app.get('/about', function(req, res){	
-	res.render('about', { fortune : fortune.getFortune() });		
+	res.render('about', { 
+		fortune : fortune.getFortune() ,
+		pageTestScript : '/qa/tests-about.js'
+	});		
 });
 
 //Custom 404 page
