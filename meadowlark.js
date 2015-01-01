@@ -97,6 +97,20 @@ app.get('/test-jquery', function(req, res){
 	res.render('jquery-test');
 });
 
+//Routes for nursery rhyme page and ajax call
+app.get('/nursery-rhyme', function(req, res){
+	res.render('nursery-rhyme');
+});
+
+app.get('/data/nursery-rhyme', function(req, res) {
+	res.json({
+		animal : 'squirrel',
+		bodyPart : 'tail',
+		adjective : 'bushy',
+		noun : 'heck'
+	});
+});
+
 //Adding routes for two new pages(hood-river and request-group-rate)
 app.get('/tours/hood-river', function(req, res){
 	res.render('tours/hood-river');
