@@ -9,6 +9,7 @@
 var express= require('express');
 var exphbs = require('express-handlebars');
 var fortune = require('./lib/fortune.js');
+var bodyParser = require('body-parser');
 
 var app = express();
 
@@ -125,7 +126,9 @@ app.get('/tours/oregon-coast', function(req, res){
 });
 
 // including body-parser middleware
-app.use(require('body-parser'));
+// since bodyparser was deprecated
+//app.use(require('body-parser')());
+app.use(bodyParser.urlencoded({ extended : false }));
 
 // Route for newsletter
 //rendering the newsletter view and assigin value to csrf hidden variable
