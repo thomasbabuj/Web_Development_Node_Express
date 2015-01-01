@@ -1,3 +1,4 @@
+
 /*
 *  Our Project's entry point
 *  app.<http_verb>( get,post... ) provides routes to our app
@@ -29,6 +30,45 @@ app.use(function(req, res, next) {
 
 //Adding a middleware to load static files and views
 app.use(express.static(__dirname + '/public'));
+
+//Mocked weather data
+function getWeatherData()
+{
+	return {
+		locations : [
+			{
+				'name' : 'Chennai, India',
+				'forecastUrl' : 'http://www.wunderground.com/global/stations/43279.html',
+				'iconUrl' : 'http://icons.wxug.com/i/c/v1/hazy.svg',
+				'weather' : 'Haze',
+				'temp' : '28 C'
+			},
+			{
+				'name' : 'Ormoc, Philippines',
+				'forecastUrl' : 'http://www.wunderground.com/q/zmw:00000.7.98550?MR=1',
+				'iconUrl' : 'http://icons.wxug.com/i/c/v1/tstorms.svg',
+				'weather' : 'Thunderstrom',
+				'temp' : '33.2 C'
+			},
+			{
+				'name' : 'Singapore',
+				'forecastUrl' : 'http://www.wunderground.com/global/stations/48698.html?MR=1',
+				'iconUrl' : 'http://icons.wxug.com/i/c/v1/mostlycloudy.svg',
+				'weather' : 'Mostly Cloudy',
+				'temp' : '27 C'
+			},
+		],
+	};
+}
+
+//middleware to add weather data to the context
+app.use(function(req, res, next){
+	if(!res.locals.partials)
+		res.locals.partials = {};
+
+	res.locals.partials.weather = getWeatherData();
+	next();
+});
 
 //Adding some routes for the Home and About Page
 app.get('/', function(req, res) {
