@@ -13,8 +13,17 @@ var fortune = require('./lib/fortune.js');
 var app = express();
 
 //Create ExpressHandleBars instance with a default layout.
+//Using handlebar helpers we are adding sections to our view
 var hbs = exphbs.create({
-	defaultLayout : 'main'
+	defaultLayout : 'main',
+	helpers : {
+		section : function(name, options) {
+			if( !this._sections )
+				this._sections = {};
+			this._sections[name] = options.fn(this);
+			return null;
+		}
+	}
 });
 
 app.engine('handlebars', hbs.engine);
@@ -81,6 +90,11 @@ app.get('/about', function(req, res){
 		fortune : fortune.getFortune() ,
 		pageTestScript : '/qa/tests-about.js'
 	});		
+});
+
+//Add a route for test jquery page
+app.get('/test-jquery', function(req, res){
+	res.render('jquery-test');
 });
 
 //Adding routes for two new pages(hood-river and request-group-rate)
