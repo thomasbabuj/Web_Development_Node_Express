@@ -9,6 +9,7 @@
 var express= require('express');
 var exphbs = require('express-handlebars');
 var fortune = require('./lib/fortune.js');
+var bodyparser = require('body-parser');
 
 var app = express();
 
