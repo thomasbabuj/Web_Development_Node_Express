@@ -145,7 +145,16 @@ app.post('/process', function(req, res) {
 	// We could render a view like this
 	//res.render('newsletter');
 
-	res.redirect(303, '/thank-you');
+	//handling the ajax request
+	if(req.xhr || req.accepts('json, html') === 'json'){
+		// if there were an error, we would send { error : 'error description' }
+		res.send({ success: true });
+	} else {
+		// if there were an error , we would redirect to an error page
+		res.redirect(303, '/thank-you');	
+	}
+
+	
 	
 });
 
