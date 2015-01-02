@@ -35,6 +35,11 @@ app.set('view engine', 'handlebars');
 
 app.set('port', process.env.PORT || 3000);
 
+//Adding cookieparser middleware
+app.use(require('cookie-parser')(credentials.cookieSecret));
+
+
+
 //Use middleware to detect test=1 in the querystring
 app.use(function(req, res, next) {
 	res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
@@ -85,6 +90,9 @@ app.use(function(req, res, next){
 
 //Adding some routes for the Home and About Page
 app.get('/', function(req, res) {
+	// Added cookie and signed cookie on the home page
+	res.cookie('monster', 'nom nom');
+	res.cookie('signed_monster', 'nom nom', {signed : true});
 	res.render('home');	
 });
 
