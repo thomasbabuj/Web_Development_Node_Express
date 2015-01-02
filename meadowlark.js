@@ -11,6 +11,7 @@ var exphbs = require('express-handlebars');
 var fortune = require('./lib/fortune.js');
 var bodyParser = require('body-parser');
 var formidable = require('formidable');
+var jqupload = require('jquery-file-upload-middleware')
 
 var app = express();
 
@@ -177,6 +178,23 @@ app.post('/contest/vacation-photo/:year/:month', function(req, res){
 		console.log(files);
 		console.log(303, '/thank-you');
 	});
+});
+
+app.get('/jqfu', function(req, res){
+	res.render('jqfu');
+});
+
+// using jquery middleware to upload files
+app.use('/upload', function(req, res, next){
+	var now = Date.now();
+	jqupload.fileHandler({
+		uploadDir : function(){
+			return __dirname + '/public/uploads/' + now;
+		},
+		uploadUrl : function() {
+			return '/uploads/' + now;
+		}
+	})(req, res, next);
 });
 
 
