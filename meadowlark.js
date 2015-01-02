@@ -36,8 +36,10 @@ app.set('view engine', 'handlebars');
 app.set('port', process.env.PORT || 3000);
 
 //Adding cookieparser middleware
+//linking the cookie parser middleware
 app.use(require('cookie-parser')(credentials.cookieSecret));
-
+//linking the express-session middleware
+app.use(require('express-session')());
 
 
 //Use middleware to detect test=1 in the querystring
