@@ -1,0 +1,32 @@
+<!-- File upload form -->
+<div class="formContainer">
+	<h2>Upload your vacation photos</h2>	
+	<form class="form-horizontal" role="form" 
+		action="/contest/vacation-photo/{{year}}/{{month}}" method="POST"
+		enctype="multipart/form-data">		
+		<input type="hidden" name="_csrf" value="{{csrf}}">
+		<div class="form-group">
+			<label for="fieldName" class="col-sm-2 control-label">Name</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" id="fieldName" name="name">
+			</div>
+		</div> <!-- Name field ends -->
+		<div class="form-group">
+			<label for="fieldEmail" class="col-sm-2 control-label">Email</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" required id="fieldEmail" name="email">
+			</div>
+		</div> <!-- Email field ends -->
+		<div class="form-group">
+			<label for="fieldPhoto" class="col-sm-2 control-label">Vaction photo</label>
+			<div class="col-sm-4">
+				<input type="file" class="form-control" required accept="image/*" id="fieldPhoto" name="photo">
+			</div>
+		</div> <!-- Email field ends -->		
+		<div class="form-group">		
+			<div class="col-sm-offset-2 col-sm-4">
+				<button type="submit" class="btn btn-default">Submit</button>
+			</div>
+		</div> <!-- Submit button field ends -->	
+	</form>
+</div>

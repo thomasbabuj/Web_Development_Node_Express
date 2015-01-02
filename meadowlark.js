@@ -10,6 +10,7 @@ var express= require('express');
 var exphbs = require('express-handlebars');
 var fortune = require('./lib/fortune.js');
 var bodyParser = require('body-parser');
+var formidable = require('formidable');
 
 var app = express();
 
@@ -152,11 +153,32 @@ app.post('/process', function(req, res) {
 	} else {
 		// if there were an error , we would redirect to an error page
 		res.redirect(303, '/thank-you');	
-	}
-
-	
-	
+	}	
 });
+
+// Route for the photo upload form
+app.get('/contest/vacation-photo', function(req, res){
+	var now = new Date();
+	res.render('vaction-photo', {
+		year : now.getFullYear(),
+		month : now.getMonth()+1
+	});
+});
+
+// Route for the photo upload
+app.post('/contest/vacation-photo/:year/:month', function(req, res){
+	var form = new formidable.IncomingForm();
+	form.parse(req, function(err, fields, files) {
+		if( err ) 
+			return res.redirect(303, '/error');
+		console.log('received fields:');
+		console.log(fields);
+		console.log('received files:');
+		console.log(files);
+		console.log(303, '/thank-you');
+	});
+});
+
 
 
 //Custom 404 page
