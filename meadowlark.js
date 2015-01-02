@@ -11,7 +11,8 @@ var exphbs = require('express-handlebars');
 var fortune = require('./lib/fortune.js');
 var bodyParser = require('body-parser');
 var formidable = require('formidable');
-var jqupload = require('jquery-file-upload-middleware')
+var jqupload = require('jquery-file-upload-middleware');
+var credentials = require('./credentials.js');
 
 var app = express();
 
