@@ -35,18 +35,17 @@ app.set('view engine', 'handlebars');
 
 app.set('port', process.env.PORT || 3000);
 
-//Adding cookieparser middleware
-//linking the cookie parser middleware
-app.use(require('cookie-parser')(credentials.cookieSecret));
-//linking the express-session middleware
-app.use(require('express-session')());
-
-
 //Use middleware to detect test=1 in the querystring
 app.use(function(req, res, next) {
 	res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
 	next();
 });
+
+//Adding cookieparser middleware
+//linking the cookie parser middleware
+app.use(require('cookie-parser')(credentials.cookieSecret));
+//linking the express-session middleware
+app.use(require('express-session')());
 
 //Adding a middleware to load static files and views
 app.use(express.static(__dirname + '/public'));
@@ -87,6 +86,13 @@ app.use(function(req, res, next){
 		res.locals.partials = {};
 
 	res.locals.partials.weather = getWeatherData();
+	next();
+});
+
+//Adding a middleware to add the flash object to the context if there is one in the session
+app.use(function(req, res){
+	res.locals.flash = req.session.flash;
+	delete req.session.flash;
 	next();
 });
 
