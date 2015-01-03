@@ -13,6 +13,7 @@ var bodyParser = require('body-parser');
 var formidable = require('formidable');
 var jqupload = require('jquery-file-upload-middleware');
 var credentials = require('./credentials.js');
+var nodemailer = require('nodemailer');
 
 var app = express();
 
@@ -250,6 +251,33 @@ app.post('/newsletter', function(req, res){
 			message : 'You have now been signed up for the newsletter.'
 		}
 	});
+});
+
+app.get('/send_email', function(req, res){
+
+	console.log ( "Gmail user " + credentials.gmail.user );
+	console.log ( "Gmail password " + credentials.gmail.password );
+	
+	var mailTransport = nodemailer.createTransport('SMTP', {
+		service : 'Gmail',
+		auth : {
+			user : credentials.gmail.user,
+			pass : credentials.gmail.password
+		}
+	}); 
+
+	mailTransport.sendMail({
+		form : '"Chopelah App" <info@chopelah.com>',
+		to : 'chopelah@gmail.com',
+		subject : 'Nodejs Express mailer',
+		text : 'Thank you for showing interest in our app. ' +
+				'We looking forward to your visit again',
+	}, function(err) {
+		if(err) 
+			console.error('Unable to send email : ' + err);			
+	});
+	console.log ( mailTransport );
+	res.send('Sending Email....');
 });
 
 
