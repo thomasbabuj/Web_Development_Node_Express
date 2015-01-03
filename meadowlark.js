@@ -254,8 +254,18 @@ app.post('/newsletter', function(req, res){
 	});
 });
 
+app.get('/send_email', function(req, res) {
+
+	// including my custom email module
+	var emailService = require('./lib/email.js')(credentials);
+
+	emailService.send('chopelah@gmail.com', 'My Nodejs Development App', '<b>Thanks for your support!..</b>');
+});
+
 app.get('/send_email', function(req, res){
 
+	// This code is trying to use nodemailer 1.0.3
+	// and got error
 	console.log ( "Gmail user " + credentials.gmail.user );
 	console.log ( "Gmail password " + credentials.gmail.password );
 	
@@ -287,7 +297,6 @@ app.get('/send_email', function(req, res){
 
 	res.send('Sending Email....');
 });
-
 
 
 //Custom 404 page
