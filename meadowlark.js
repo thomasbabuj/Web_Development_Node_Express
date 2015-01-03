@@ -37,6 +37,21 @@ app.set('view engine', 'handlebars');
 
 app.set('port', process.env.PORT || 3000);
 
+//adding logging support
+switch(app.get('env')) {
+	case 'development' :
+		// compact, colorful dev logging
+		app.use(require('morgan')('dev'));
+		break;
+	case 'production' :
+		// module 'express-logger supports daily log rotation'
+		app.use(require('express-logger')({
+			path : __dirname + '/log/requests.log'
+		}));
+		break;
+}	
+
+
 //Use middleware to detect test=1 in the querystring
 app.use(function(req, res, next) {
 	res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
@@ -315,5 +330,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(app.get('port'), function(){
-	console.log ('Express started on http://localhost:'+ app.get('port') + '; press Ctrl+C to terminate.');
+	console.log ('\n\n Express started on ' 
+		+ app.get('env')  + ' environment '
+		+ ' http://localhost:' + app.get('port') + '; press Ctrl+C to terminate.');	
 });
