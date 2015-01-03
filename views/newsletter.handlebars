@@ -43,10 +43,10 @@ Implementing the Ajax forms submission using jquery sections
 						{
 							$container.html('<h2>Thank you!</h2>');
 						} else {
-							$container.html('There was a problem');
+							$container.html( data.error );
 						}
 					}, 
-					error : function(){
+					error : function(){						
 						$container.html('There was a problem');
 					}
 				});

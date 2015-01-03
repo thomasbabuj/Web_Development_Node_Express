@@ -219,6 +219,7 @@ app.post('/newsletter', function(req, res){
 	var name = req.body.name || '', email = req.body.email || '';
 	//input validation
 	 var reg = "/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/";
+	 
 	if( !email.match(reg) ) {
 		if( req.xhr )
 			return res.json({ error : 'Invalid name email address.'});
