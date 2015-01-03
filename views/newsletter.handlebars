@@ -31,7 +31,8 @@ Implementing the Ajax forms submission using jquery sections
 		$(document).ready(function(){
 			$('.newsletterForm').on('submit', function(e){
 				e.preventDefault();
-				var action = $(this).attr('action');
+				//var action = $(this).attr('action');
+				var action = '/newsletter';
 				var $container = $(this).closest('.formContainer');
 
 				$.ajax({

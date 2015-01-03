@@ -214,6 +214,43 @@ app.use('/upload', function(req, res, next){
 	})(req, res, next);
 });
 
+//newsletter signup 
+app.post('/newsletter', function(req, res){
+	var name = req.body.name || '', email = req.body.email || '';
+	//input validation
+	 var reg = "/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/";
+	if( !email.match(reg) ) {
+		if( req.xhr )
+			return res.json({ error : 'Invalid name email address.'});
+		req.session.flash = {
+			type : 'danger',
+			intro : 'Validation error!',
+			message : 'The email address you enerted was not valid.'
+		};
+		return res.redirect(303, '/newsletter/archive');
+	}
+
+	new NewsletterSignup({name : name, email : email}).save(function(err){
+		if( err ) {
+			if(req.xhr)
+				return res.json({'error' : 'Database error.'});
+			res.session.falsh = {
+				type: 'danger',
+				intro : 'Database error!',
+				message : 'There was a databse error; Please try again later.'
+			};
+			return res.redirect(303, '/newsletter/archive')
+		}
+
+		if( req.xhr ) return res.json({ success : true });
+		res.session.flash = {
+			type : 'success',
+			intro : 'Thank you!',
+			message : 'You have now been signed up for the newsletter.'
+		}
+	});
+});
+
 
 
 //Custom 404 page
