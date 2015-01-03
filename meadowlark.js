@@ -14,6 +14,7 @@ var formidable = require('formidable');
 var jqupload = require('jquery-file-upload-middleware');
 var credentials = require('./credentials.js');
 var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 var app = express();
 
@@ -258,25 +259,32 @@ app.get('/send_email', function(req, res){
 	console.log ( "Gmail user " + credentials.gmail.user );
 	console.log ( "Gmail password " + credentials.gmail.password );
 	
-	var mailTransport = nodemailer.createTransport('SMTP', {
-		service : 'Gmail',
-		auth : {
-			user : credentials.gmail.user,
-			pass : credentials.gmail.password
-		}
-	}); 
+	var mailTransport = nodemailer.createTransport(
 
-	mailTransport.sendMail({
-		form : '"Chopelah App" <info@chopelah.com>',
+		smtpTransport({
+    		service: 'Gmail',
+    		auth: {
+				user : credentials.gmail.user,
+				pass : credentials.gmail.password
+			}
+	})); 
+
+	//Setting up email data
+	var mailOptions = {
+		from : '"ChopeLah" <info@chopelah.com>',
 		to : 'chopelah@gmail.com',
-		subject : 'Nodejs Express mailer',
-		text : 'Thank you for showing interest in our app. ' +
-				'We looking forward to your visit again',
-	}, function(err) {
-		if(err) 
-			console.error('Unable to send email : ' + err);			
+		subject : 'Hello from nodemailer',
+		text : 'Hello World',
+		html : '<b>Hello World</b>'
+	};
+
+	mailTransport.sendMail(mailOptions, function(error, info) {
+		if (error)
+			console.log( error );
+		else
+			console.log ('Message sent :' + info.response );
 	});
-	console.log ( mailTransport );
+
 	res.send('Sending Email....');
 });
 
