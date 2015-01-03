@@ -90,7 +90,7 @@ app.use(function(req, res, next){
 });
 
 //Adding a middleware to add the flash object to the context if there is one in the session
-app.use(function(req, res){
+app.use(function(req, res, next){
 	res.locals.flash = req.session.flash;
 	delete req.session.flash;
 	next();
