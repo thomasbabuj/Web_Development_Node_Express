@@ -6,6 +6,7 @@
 *  middlewares provides modularization, making it easier to hanlde requests.
 */
 
+var http = require('http');
 var express= require('express');
 var exphbs = require('express-handlebars');
 var fortune = require('./lib/fortune.js');
@@ -329,8 +330,31 @@ app.use(function(err, req, res, next) {
 	res.render('500');		
 });
 
+/*
 app.listen(app.get('port'), function(){
 	console.log ('\n\n Express started on ' 
 		+ app.get('env')  + ' environment '
 		+ ' http://localhost:' + app.get('port') + '; press Ctrl+C to terminate.');	
 });
+*/
+
+// Using nodejs app clusters
+function startServer(){
+	http.createServer(app).listen(
+		app.get('port'), function(){
+		console.log('Express started in ' + app.get('env') + 
+			' mode on http://localhost:' + app.get('port') +
+			' ; press Ctrl+C to terminate.');	
+	});
+}
+
+//Configure this app file to be as a module
+if (require.main === module)
+{
+	//application run directly; start app server
+	startServer();
+} else {
+	// application imported as a module via 'require' export function
+	// to create server
+	module.exports = startServer;
+}
